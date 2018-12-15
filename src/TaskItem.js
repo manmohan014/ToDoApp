@@ -1,17 +1,19 @@
 import React from 'react';
 import Moment from 'moment';
 
-class ProductItem extends React.Component{
+class TaskItem extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            isEdit: false
+            isEdit: false,
+            setReminder: false
         };
         this.onDelete = this.onDelete.bind(this);
         this.onEdit = this.onEdit.bind(this);
         this.onEditSubmit = this.onEditSubmit.bind(this);
+        
     }
-
+    
     onDelete(){
         const{ onDelete, title } = this.props;
         onDelete(title);
@@ -41,9 +43,7 @@ class ProductItem extends React.Component{
                             </h3>
                 <textarea placeholder="Description" ref={descInput => this.descInput = descInput} defaultValue={desc}/>
                 <br />
-                <label> Reminder: </label>
-                <br />
-                <input  ref={dueDate => this.dueDate = dueDate} defaultValue={dueDate}/>
+                <input  type = "datetime-local" ref={dueDate => this.dueDate = dueDate} defaultValue={dueDate}/>
                 <br />
                 <button className="btn btn-success" >Save</button>    
                         </form>
@@ -53,9 +53,12 @@ class ProductItem extends React.Component{
                     :(
                         <div className="card w-75">
                         <div className="card-body">
-                        <h3 className="card-title">{title}</h3>                         
-                        <p className="card-text"> {desc}</p>              
-                        <span>{dueDate}<em>({Moment(new Date(dueDate)).fromNow()})</em></span>
+                        <h3 className="card-title">
+                        <b>
+                        {title}
+                        </b></h3>                         
+                        <h4 className="card-text"> {desc}</h4>              
+                        <span>{dueDate}<em> ({Moment(new Date(dueDate)).fromNow()})</em></span>
                         <br />              
                         <button className="btn btn-primary" onClick={this.onEdit}> Edit </button>              
                         <button className="btn btn-danger" onClick={this.onDelete}> Delete </button>
@@ -70,4 +73,4 @@ class ProductItem extends React.Component{
     }
 }
 
-export default ProductItem;
+export default TaskItem;

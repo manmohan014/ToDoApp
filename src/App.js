@@ -1,76 +1,74 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './App.css';
-import ProductItem from './ProductItem';
+import TaskItem from './TaskItem';
 import AddItem from './AddItem';
 
-const products = [
+const tasks = [
 {
-  title: 'Clean the room',
-  desc: 'Clean the living room and study room' ,
+  title: 'Practice',
+  desc: "Make sure to practice for next week's football tournament",
   dueDate: '2018-12-18 20:00'
 },
 {
   title: 'Study',
-  desc: 'Study for the finals',
+  desc: 'Study for the finals three hours daily',
   dueDate: '2018-12-19 20:00'
 }
 ];
 
-localStorage.setItem('products',JSON.stringify(products));
-class App extends Component {
+localStorage.setItem('tasks',JSON.stringify(tasks));
+
+class App extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      products: JSON.parse(localStorage.getItem('products'))
+      tasks: JSON.parse(localStorage.getItem('tasks'))
     };
+    
     this.onDelete = this.onDelete.bind(this);
     this.onAdd = this.onAdd.bind(this);
-    this.onEditSubmit = this.onEditSubmit.bind(this);
-    
+    this.onEditSubmit = this.onEditSubmit.bind(this);    
   }
 
   componentWillMount(){
-    const products = this.getProducts();
-    this.setState({products});
-
+    const tasks = this.getTasks();
+    this.setState({tasks});
   }
 
-  getProducts(){
-    return this.state.products
-    
+  getTasks(){
+    return this.state.tasks
   }
 
   onAdd(title, desc, dueDate){
-    const products = this.getProducts();
-
-    products.push({
+    const tasks = this.getTasks();
+    tasks.push({
       title,
       desc,
       dueDate
     });
 
-    this.setState({products});
+    this.setState({tasks});
   }
   onDelete(title){
-    const products = this.getProducts();
-    const filteredProducts = products.filter(product =>{
-      return product.title !== title;
+    const tasks = this.getTasks();
+    const filteredTasks = tasks.filter(task =>{
+      return task.title !== title;
     });
 
-    this.setState({products: filteredProducts});
+    this.setState({tasks: filteredTasks});
   }
 
   onEditSubmit(title, desc, dueDate, originalTitle){
-    let products = this.getProducts();
-    products = products.map(product => {
-      if(product.title === originalTitle){
-      product.title = title;
-      product.desc = desc;
-      product.dueDate = dueDate;
+    let tasks = this.getTasks();
+    tasks = tasks.map(task => {
+      if(task.title === originalTitle){
+      task.title = title;
+      task.desc = desc;
+      task.dueDate = dueDate;
     }
-    return product;
+    return task;
      });
-  this.setState({products});  
+  this.setState({tasks});  
 }
   render() {
     return (
@@ -79,11 +77,11 @@ class App extends Component {
         <AddItem 
          onAdd={this.onAdd}/>
         {
-          this.state.products.map(product => {
+          this.state.tasks.map(task => {
             return(
-             <ProductItem 
-             key={product.title}
-             {...product}
+             <TaskItem 
+             key={task.title}
+             {...task}
              onDelete={this.onDelete}
              onEditSubmit={this.onEditSubmit}
              />

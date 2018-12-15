@@ -1,12 +1,9 @@
 .App {
   text-align: center;
   background-color: #A6E1EC;
+  font-family: 'Source Serif Pro', serif;
 }
 
-.jumbotron{
-  padding-left: 25%;
-  padding-right: 25%;
-}
 .btn-primary{
   margin-top: 10px;
   margin-right: 5px;
@@ -14,4 +11,10 @@
 .btn-danger{
   margin-top: 10px;
   margin-left: 5px;
+}
+.reminderCheckbox{
+  margin-top: 10px;
+}
+.btn-success{
+  margin-top: 5px;
 }
